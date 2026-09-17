@@ -191,6 +191,17 @@ function endGame(win){
     btn.addEventListener('click',()=>{TelegramGameProxy.shareScore();});
     status.appendChild(btn);
   }
+  try{
+    const q=new URLSearchParams(location.search);
+    const suid=q.get('uid'),schat=q.get('chat'),smid=q.get('mid'),ssig=q.get('sig');
+    const sscore=win?(rows*cols-totalMines):cleared;
+    if(suid&&schat&&smid&&ssig&&window.fetch){
+      fetch('https://sen-telegram-bot-production.up.railway.app/score',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({uid:parseInt(suid),chat:parseInt(schat),mid:parseInt(smid),score:sscore,sig:ssig})
+      }).catch(()=>{});
+    }
+  }catch(e){}
 }
 
 function render(){
