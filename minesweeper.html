@@ -145,7 +145,8 @@ function reveal(r,c){
   if(!timerInterval){timerInterval=setInterval(()=>{seconds++;document.getElementById('timer').textContent=seconds;},1000);}
   if(board[r][c]===-1){gameOver=true;revealed[r][c]=true;render();endGame(false);return;}
   floodReveal(r,c);
-  if(checkWin()){gameOver=true;won=true;render();endGame(true);}
+  render();
+  if(checkWin()){gameOver=true;won=true;endGame(true);}
 }
 
 function floodReveal(r,c){
